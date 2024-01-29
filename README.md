@@ -4,6 +4,7 @@ A simple implementation of DIN 5008 B in typst used for German business letters.
 ## Usage
 
 Example:
+![Example image of the rendered typst code.](./example.svg)
 ```typst
 #import "din5008-letter.typ": *
 #set text(
