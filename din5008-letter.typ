@@ -58,7 +58,10 @@
               #letter.senderZipCode #letter.senderCity \
               #phone(letter.senderPhoneNo)\
               #email(letter.senderMail)\
-              #githubLink(letter.senderGithub)\
+              #if letter.senderGithub != none {
+                githubLink(letter.senderGithub)
+                linebreak()
+              }
               #v(8.46mm)
             ]
           )
@@ -68,7 +71,7 @@
         right,
         datetime.today().display("[day].[month].[year]")
       )
-      
+
       #text(
         weight: "bold",
         letter.subject
@@ -97,7 +100,7 @@
   senderCity: "Somwheretown",
   senderPhoneNo: "0123 456789",
   senderMail: "no@given.mail",
-  senderGithub: "https://github.com/nogivengithubname",
+  senderGithub: none,
   receiverName: "Noreceiver Name Given",
   receiverStreet: "No-Receiver-Street",
   receiverHouseNo: "11",
