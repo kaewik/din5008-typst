@@ -8,26 +8,26 @@
   image(
     width: 10pt,
     "github-mark.png"
-  ), 
+  ),
   content
 )
 
 #let email(content) = iconGrid(
-  emoji.mail, 
+  emoji.mail,
   content
 )
-  
+
 #let phone(content) = iconGrid(
   emoji.phone.receiver,
   content
 )
 
 
-#let build(letter) = {
+#let build(letter, config) = {
   page(
     paper: "a4",
     margin: (
-      top: 45mm, 
+      top: 45mm,
       bottom: 1.69cm,
       left: 2.5cm,
       right: letter.rightMargin
@@ -69,7 +69,7 @@
       )
       #align(
         right,
-        datetime.today().display("[day].[month].[year]")
+        letter.dateLine
       )
 
       #text(
@@ -85,14 +85,22 @@
         letter.body
       )
       \
-      #letter.greeting \
-      \
-      #letter.senderName
+      #letter.greeting
+      #if not config.disableGreetingLine {
+        linebreak()
+        linebreak()
+        linebreak()
+        linebreak()
+        [
+          #letter.senderName
+        ]
+      }
     ]
   )
 }
 #let makeLetter(
   rightMargin: 2cm,
+  dateLine: datetime.today().display("[day].[month].[year]"),
   senderName: "Noname Given",
   senderStreet: "No-Given-Street",
   senderHouseNo: "00",
@@ -111,27 +119,31 @@
   opening: "Dear ladies and gentlemen",
   body: "Lorem ipsum",
   greeting: "Best regards,",
+  config: (
+    disableGreetingLine: false
+  )
 ) = {
   let letter = (:)
   letter.insert("rightMargin", rightMargin)
-  letter.insert("senderName", senderName) 
-  letter.insert("senderStreet", senderStreet) 
-  letter.insert("senderHouseNo", senderHouseNo) 
-  letter.insert("senderZipCode", senderZipCode) 
-  letter.insert("senderCity", senderCity) 
-  letter.insert("senderPhoneNo", senderPhoneNo) 
-  letter.insert("senderMail", senderMail) 
-  letter.insert("senderGithub", senderGithub) 
-  letter.insert("receiverName", receiverName) 
-  letter.insert("receiverStreet", receiverStreet) 
-  letter.insert("receiverHouseNo", receiverHouseNo) 
-  letter.insert("receiverZipCode", receiverZipCode) 
-  letter.insert("receiverCity", receiverCity) 
-  letter.insert("receiverMail", receiverMail) 
-  letter.insert("subject", subject) 
-  letter.insert("opening", opening) 
-  letter.insert("body", body) 
-  letter.insert("greeting", greeting) 
-  
-  build(letter)
+  letter.insert("dateLine", dateLine)
+  letter.insert("senderName", senderName)
+  letter.insert("senderStreet", senderStreet)
+  letter.insert("senderHouseNo", senderHouseNo)
+  letter.insert("senderZipCode", senderZipCode)
+  letter.insert("senderCity", senderCity)
+  letter.insert("senderPhoneNo", senderPhoneNo)
+  letter.insert("senderMail", senderMail)
+  letter.insert("senderGithub", senderGithub)
+  letter.insert("receiverName", receiverName)
+  letter.insert("receiverStreet", receiverStreet)
+  letter.insert("receiverHouseNo", receiverHouseNo)
+  letter.insert("receiverZipCode", receiverZipCode)
+  letter.insert("receiverCity", receiverCity)
+  letter.insert("receiverMail", receiverMail)
+  letter.insert("subject", subject)
+  letter.insert("opening", opening)
+  letter.insert("body", body)
+  letter.insert("greeting", greeting)
+
+  build(letter, config)
 }
