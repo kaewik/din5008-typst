@@ -56,8 +56,14 @@
               #letter.senderName \
               #letter.senderStreet #letter.senderHouseNo \
               #letter.senderZipCode #letter.senderCity \
-              #phone(letter.senderPhoneNo)\
-              #email(letter.senderMail)\
+              #if letter.senderPhoneNo != none {
+                phone(letter.senderPhoneNo)
+                linebreak()
+              }
+              #if letter.senderMail != none {
+                email(letter.senderMail)
+                linebreak()
+              }
               #if letter.senderGithub != none {
                 githubLink(letter.senderGithub)
                 linebreak()
@@ -106,8 +112,8 @@
   senderHouseNo: "00",
   senderZipCode: "12345",
   senderCity: "Somwheretown",
-  senderPhoneNo: "0123 456789",
-  senderMail: "no@given.mail",
+  senderPhoneNo: none,
+  senderMail: none,
   senderGithub: none,
   receiverName: "Noreceiver Name Given",
   receiverStreet: "No-Receiver-Street",
